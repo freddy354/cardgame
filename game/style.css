@@ -1,0 +1,142 @@
+/* Three Lanterns — table styling. All art is CSS and inline SVG; no external
+   assets, no web fonts. The table is a deep green felt, the lanterns burn
+   gold, and each suit carries its own colour so a card reads at a glance. */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --felt: #0d2b26;
+  --felt-light: #14443a;
+  --felt-edge: #1e5c4d;
+  --gold: #f2a541;
+  --gold-soft: #ffd98a;
+  --ink: #f4efe4;
+  --ink-dim: #b9c4bb;
+  --card: #f7f2e6;
+  --card-ink: #241f18;
+  --ember: #e4572e;
+  --tide: #2e86e4;
+  --gale: #2fae7d;
+  --stone: #9a8a76;
+  --danger: #d64545;
+}
+html { background: #081713; }
+body {
+  font-family: Georgia, 'Times New Roman', serif;
+  background: radial-gradient(1200px 700px at 50% -10%, #17493d 0%, var(--felt) 55%, #081713 100%);
+  color: var(--ink);
+  min-height: 100vh;
+}
+.app { max-width: 1060px; margin: 0 auto; padding: 20px 18px 40px; }
+.noscript { text-align: center; padding: 60px 20px; font-size: 18px; }
+
+/* ---- screens: title and end ---- */
+.screen { text-align: center; padding: 48px 20px 30px; }
+.eyebrow { letter-spacing: 0.28em; text-transform: uppercase; font-size: 12px; color: var(--gold-soft); }
+.screen h1 { font-size: 64px; line-height: 1.05; margin: 14px 0 10px; color: var(--gold); text-shadow: 0 3px 0 rgba(0,0,0,0.35); }
+.tagline { font-size: 19px; line-height: 1.5; max-width: 620px; margin: 0 auto 22px; color: var(--ink); }
+.rules { text-align: left; max-width: 640px; margin: 0 auto 28px; background: rgba(0,0,0,0.25); border: 1px solid var(--felt-edge); border-radius: 12px; padding: 18px 22px; }
+.rules p { font-size: 15.5px; line-height: 1.55; margin-bottom: 10px; }
+.rules p:last-child { margin-bottom: 0; }
+.rules strong { color: var(--gold-soft); }
+.primary {
+  font-family: inherit; font-size: 17px; font-weight: bold; cursor: pointer;
+  background: linear-gradient(180deg, var(--gold-soft), var(--gold));
+  color: #3a2404; border: none; border-radius: 10px; padding: 12px 26px;
+  box-shadow: 0 3px 0 #9a6414, 0 6px 14px rgba(0,0,0,0.4);
+}
+.primary:hover { filter: brightness(1.07); }
+.primary:active { transform: translateY(2px); box-shadow: 0 1px 0 #9a6414; }
+.primary.big { font-size: 20px; padding: 15px 34px; }
+.end.won h1 { color: #ffe9a8; }
+.end.lost h1 { color: #e88; }
+.score { font-size: 17px; margin-bottom: 18px; color: var(--ink-dim); }
+.end-log { list-style: none; max-width: 560px; margin: 0 auto 26px; text-align: left; font-size: 14.5px; line-height: 1.5; color: var(--ink-dim); }
+.end-log li { margin-bottom: 6px; }
+
+/* ---- duel header ---- */
+.duel-head { display: grid; grid-template-columns: 1fr auto 1fr; gap: 14px; align-items: start; margin-bottom: 10px; }
+.duellist h2 { font-size: 19px; margin-bottom: 6px; }
+.duellist.you { text-align: right; }
+.duellist.sable h2 { color: #c9a7ff; }
+.duellist.you h2 { color: var(--gold-soft); }
+.life-num { font-size: 13.5px; color: var(--ink-dim); margin-top: 5px; }
+.round-badge { align-self: center; background: rgba(0,0,0,0.35); border: 1px solid var(--felt-edge); border-radius: 999px; padding: 8px 16px; font-size: 15px; white-space: nowrap; }
+.lanterns { font-size: 13px; letter-spacing: 1px; line-height: 1.7; word-break: break-all; }
+.lanterns .flame { color: var(--gold); text-shadow: 0 0 6px rgba(242,165,65,0.8); }
+.lanterns .flame.out { color: #3d4a44; text-shadow: none; }
+.duellist.you .lanterns { text-align: right; }
+
+/* ---- rows ---- */
+.sable-hand { display: flex; gap: 6px; justify-content: center; margin: 6px 0 12px; min-height: 54px; }
+.rows { display: grid; gap: 12px; }
+.row { background: rgba(0,0,0,0.22); border: 1px solid var(--felt-edge); border-radius: 12px; padding: 10px 14px; cursor: pointer; }
+.row.selected-row { border-color: var(--gold); box-shadow: 0 0 0 2px rgba(242,165,65,0.35); }
+.row-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.row-head h3 { font-size: 16px; color: var(--gold-soft); }
+.row-total { font-size: 14px; color: var(--ink-dim); }
+.row-cards { display: grid; grid-template-columns: 64px 1fr; gap: 8px 10px; align-items: center; }
+.side-label { font-size: 12.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); }
+.slot { min-height: 132px; display: flex; align-items: center; gap: 10px; }
+.slot.empty { border: 2px dashed rgba(244,239,228,0.22); border-radius: 10px; justify-content: center; color: rgba(244,239,228,0.35); font-style: italic; font-size: 14px; }
+.slot.filled { justify-content: flex-start; }
+.doubled { font-size: 12.5px; color: var(--gold-soft); background: rgba(242,165,65,0.15); border: 1px solid rgba(242,165,65,0.5); border-radius: 999px; padding: 3px 9px; white-space: nowrap; }
+
+/* ---- cards ---- */
+.card {
+  width: 104px; height: 132px; flex: none; border-radius: 10px; position: relative;
+  background: linear-gradient(160deg, #fffdf6, var(--card));
+  color: var(--card-ink); border: 1px solid #d8cdb4;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.45);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  padding: 8px 6px; text-align: center;
+}
+.card.suit-ember { border-top: 6px solid var(--ember); }
+.card.suit-tide { border-top: 6px solid var(--tide); }
+.card.suit-gale { border-top: 6px solid var(--gale); }
+.card.suit-stone { border-top: 6px solid var(--stone); }
+.card.kind-lantern { border-top: 6px solid var(--gold); background: linear-gradient(160deg, #fff8e0, #f7e9bd); }
+.card.kind-tempest { border-top: 6px solid #6a5acd; background: linear-gradient(160deg, #eceaff, #d9d4f5); }
+.card-corner { position: absolute; top: 7px; left: 8px; opacity: 0.9; }
+.card-corner svg { width: 18px; height: 18px; }
+.card.suit-ember .card-corner, .card.suit-ember .card-value { color: var(--ember); }
+.card.suit-tide .card-corner, .card.suit-tide .card-value { color: var(--tide); }
+.card.suit-gale .card-corner, .card.suit-gale .card-value { color: var(--gale); }
+.card.suit-stone .card-corner, .card.suit-stone .card-value { color: #6f6252; }
+.card.kind-lantern .card-corner, .card.kind-lantern .card-value { color: #a86f00; }
+.card.kind-tempest .card-corner, .card.kind-tempest .card-value { color: #4b3fae; }
+.card-value { font-size: 40px; font-weight: bold; line-height: 1; margin-top: 8px; }
+.card-name { font-size: 14px; font-weight: bold; }
+.card-sub { font-size: 11px; line-height: 1.3; color: #6d6252; }
+.card.back {
+  background: repeating-linear-gradient(45deg, #2a1e4f 0 10px, #241a44 10px 20px);
+  color: #c9a7ff; border: 1px solid #4b3a7a;
+}
+.card.back .moth { font-size: 34px; }
+.card.back .back-name { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; }
+.card.back.small { width: 44px; height: 54px; }
+.card.back.small .moth { font-size: 20px; }
+.card.selected { outline: 3px solid var(--gold); outline-offset: 2px; transform: translateY(-6px); }
+
+/* ---- hand, actions, log ---- */
+.hand { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin: 16px 0 10px; min-height: 140px; }
+.hand-card { background: none; border: none; padding: 0; cursor: pointer; font-family: inherit; }
+.hand-card:hover .card { transform: translateY(-6px); }
+.hand-card.selected .card { outline: 3px solid var(--gold); outline-offset: 2px; transform: translateY(-6px); }
+.actions { text-align: center; margin: 6px 0 4px; }
+.hint { font-size: 14px; color: var(--ink-dim); line-height: 1.5; }
+.damage-note { text-align: center; font-size: 14px; color: var(--gold-soft); margin-top: 8px; }
+.log { margin-top: 18px; background: rgba(0,0,0,0.25); border: 1px solid var(--felt-edge); border-radius: 12px; padding: 14px 18px; }
+.log h3 { font-size: 14px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-soft); margin-bottom: 8px; }
+.log ul { list-style: none; }
+.log li { font-size: 14px; line-height: 1.5; color: var(--ink-dim); margin-bottom: 5px; }
+.log li:last-child { color: var(--ink); }
+
+@media (max-width: 700px) {
+  .screen h1 { font-size: 44px; }
+  .duel-head { grid-template-columns: 1fr; text-align: center; }
+  .duellist.you { text-align: center; }
+  .duellist.you .lanterns { text-align: center; }
+  .round-badge { justify-self: center; }
+  .row-cards { grid-template-columns: 52px 1fr; }
+  .card { width: 88px; height: 118px; }
+  .card-value { font-size: 32px; }
+}
